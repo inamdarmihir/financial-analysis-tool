@@ -5,7 +5,7 @@ import { z } from 'zod';
 export const getStockPrice = tool(
   async ({ ticker }: { ticker: string }) => {
     try {
-      const quote = await yahooFinance.quote(ticker);
+      const quote = await yahooFinance.quote(ticker) as any;
       return JSON.stringify({
         ticker,
         price: quote.regularMarketPrice,
@@ -32,8 +32,8 @@ export const getStockPrice = tool(
 export const getCompanyInfo = tool(
   async ({ ticker }: { ticker: string }) => {
     try {
-      const quote = await yahooFinance.quote(ticker);
-      const summary = await yahooFinance.quoteSummary(ticker, { modules: ['assetProfile', 'defaultKeyStatistics'] });
+      const quote = await yahooFinance.quote(ticker) as any;
+      const summary = await yahooFinance.quoteSummary(ticker, { modules: ['assetProfile', 'defaultKeyStatistics'] }) as any;
 
       return JSON.stringify({
         ticker,
@@ -60,8 +60,8 @@ export const getCompanyInfo = tool(
 export const getRecentNews = tool(
   async ({ ticker }: { ticker: string }) => {
     try {
-      const results = await yahooFinance.search(ticker, { newsCount: 5 });
-      const news = results.news.map(n => ({
+      const results = await yahooFinance.search(ticker, { newsCount: 5 }) as any;
+      const news = results.news.map((n: any) => ({
         title: n.title,
         publisher: n.publisher,
         link: n.link,
@@ -80,4 +80,23 @@ export const getRecentNews = tool(
   }
 );
 
-export const tools = [getStockPrice, getCompanyInfo, getRecentNews];
+export const calculator = tool(
+  async ({ expression }: { expression: string }) => {
+    try {
+      // Very basic and restricted evaluation for calculator
+      const result = new Function(`return ${expression}`)();
+      return JSON.stringify({ expression, result });
+    } catch (e: any) {
+      return `Failed to evaluate expression: ${e.message}`;
+    }
+  },
+  {
+    name: 'calculator',
+    description: 'Evaluate a mathematical expression. Use this for all calculations to ensure accuracy.',
+    schema: z.object({
+      expression: z.string().describe('A mathematical expression (e.g. "100 * 0.05", "1234.56 / 12")'),
+    }),
+  }
+);
+
+export const tools = [getStockPrice, getCompanyInfo, getRecentNews, calculator];
