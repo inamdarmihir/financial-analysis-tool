@@ -1,8 +1,17 @@
-# Dexter — Multi-Agent Financial Research System
+# 🌌 Astra — Multi-Agent Financial Research System
 
 > Inspired by [hermes-agent](https://github.com/nousresearch/hermes-agent)'s self-improving agent architecture — built for financial research.
 
-A terminal-based AI financial research system with **6 specialist agents**, **Qdrant-powered semantic memory**, a **self-improving research loop**, and a **natural language clarification engine**. Just describe what you want — Dexter asks the right follow-up questions, coordinates the right experts, and stores what it learns for next time.
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Bun](https://img.shields.io/badge/Bun-1.x-fbf0df?logo=bun&logoColor=black)](https://bun.sh)
+[![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o-412991?logo=openai&logoColor=white)](https://platform.openai.com/)
+[![Powered by Qdrant](https://img.shields.io/badge/Powered%20by-Qdrant-DC244C?logo=qdrant&logoColor=white)](https://qdrant.tech)
+[![LangChain](https://img.shields.io/badge/LangChain-0.3.x-1C3C3C?logo=langchain&logoColor=white)](https://langchain.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+A terminal-based AI financial research system with **6 specialist agents**, **Qdrant-powered semantic memory**, a **self-improving research loop**, and a **natural language clarification engine**. Just describe what you want — Astra asks the right follow-up questions, coordinates the right experts, and stores what it learns for next time.
+
+> ⚠️ **Disclaimer:** This tool is for **educational and informational purposes only**. It does not constitute financial advice, investment recommendations, or professional financial guidance of any kind. Always consult a licensed financial advisor before making any investment decisions.
 
 ---
 
@@ -19,7 +28,7 @@ User (natural language)
                ▼
   ┌────────────────────────┐     ┌─────────────────────────────┐
   │   Orchestrator Agent   │────▶│  Qdrant Vector Memory        │
-  │        (Dexter)        │◀────│  Semantic search of past     │
+  │        (Astra)         │◀────│  Semantic search of past     │
   └────────────┬───────────┘     │  research across sessions    │
                │                 └─────────────────────────────┘
     delegates to 6 specialists
@@ -40,19 +49,19 @@ Rsrch  Report        ment   folio
 
 | Agent | Specialization | Key Tools |
 |-------|---------------|-----------|
-| **📊 Market Research** | Sector trends, competitors, thematic research | `get_sector_overview`, `search_market_news`, `get_competitors`, `get_trending_stocks` |
-| **📈 Stock Report** | Deep fundamental analysis & valuation | `get_stock_price`, `get_company_info`, `get_financials`, `get_historical_prices`, `get_analyst_ratings` |
-| **📉 Quantitative** | Technical indicators & price signals | `get_technical_indicators` (RSI/MACD/BB), `get_volatility_profile`, `get_price_targets` |
-| **🌍 Macro** | Market regime, rates, commodities | `get_market_snapshot`, `get_yield_curve`, `get_sector_performance`, `get_commodities_and_currencies` |
-| **🧠 Sentiment** | News scoring, short interest, insider activity | `get_news_sentiment`, `get_short_interest_and_insider` |
-| **💼 Portfolio** | P&L, allocation, rebalancing | `get_portfolio_snapshot`, portfolio math via `calculator` |
-| **🎯 Orchestrator** | Routes, synthesizes, stores insights | `delegate_*` × 6, `store_research_insight` |
+| 📊 **Market Research** | Sector trends, competitors, thematic research | `get_sector_overview`, `search_market_news`, `get_competitors`, `get_trending_stocks` |
+| 📈 **Stock Report** | Deep fundamental analysis & valuation | `get_stock_price`, `get_company_info`, `get_financials`, `get_historical_prices`, `get_analyst_ratings` |
+| 📉 **Quantitative** | Technical indicators & price signals | `get_technical_indicators` (RSI/MACD/BB), `get_volatility_profile`, `get_price_targets` |
+| 🌍 **Macro** | Market regime, rates, commodities | `get_market_snapshot`, `get_yield_curve`, `get_sector_performance`, `get_commodities_and_currencies` |
+| 🧠 **Sentiment** | News scoring, short interest, insider activity | `get_news_sentiment`, `get_short_interest_and_insider` |
+| 💼 **Portfolio** | P&L, allocation, rebalancing | `get_portfolio_snapshot`, portfolio math via `calculator` |
+| 🎯 **Orchestrator** | Routes, synthesizes, stores insights | `delegate_*` × 6, `store_research_insight` |
 
 ---
 
 ## 🧠 Qdrant Vector Memory (Self-Improving Loop)
 
-Dexter uses **Qdrant** as a vector database to build semantic memory across sessions:
+Powered by **[Qdrant](https://qdrant.tech)** — the high-performance vector database built for AI.
 
 ```
 Query → OpenAI Embeddings → Qdrant search → Relevant past insights
@@ -66,12 +75,12 @@ Query → OpenAI Embeddings → Qdrant search → Relevant past insights
 ```
 
 **Why Qdrant matters:**
-- Semantic search finds `"chip supply chain"` when you ask about `"semiconductor demand"` — keyword search can't do this
-- Insights accumulate across sessions — the more you use Dexter, the smarter it gets
-- Filtered by ticker, query type, and sentiment for precision retrieval
-- Falls back to keyword-based JSON matching if Qdrant is unavailable
+- 🔍 Semantic search finds `"chip supply chain"` when you ask about `"semiconductor demand"` — keyword search can't do this
+- 📈 Insights accumulate across sessions — the more you use Astra, the smarter it gets
+- 🎯 Filtered by ticker, query type, and sentiment for precision retrieval
+- 🔄 Falls back to keyword-based JSON matching if Qdrant is unavailable
 
-### Setting up Qdrant
+### ⚙️ Setting up Qdrant
 
 **Option A — Docker (recommended for local use):**
 ```bash
@@ -88,13 +97,13 @@ QDRANT_PORT=6333
 QDRANT_API_KEY=your_api_key_here
 ```
 
-> **Without Qdrant:** Dexter still works fully — it falls back to keyword-based JSON memory automatically. You'll see `○ Qdrant (fallback: keyword search)` in the banner.
+> 💡 **Without Qdrant:** Astra still works fully — it falls back to keyword-based JSON memory automatically. You'll see `○ Qdrant (fallback: keyword search)` in the banner.
 
 ---
 
 ## 🔍 Clarification Engine
 
-Before delegating to specialists, Dexter classifies intent and asks targeted follow-up questions:
+Before delegating to specialists, Astra classifies intent and asks targeted follow-up questions:
 
 ```
 User: "Tell me about Apple"
@@ -104,14 +113,14 @@ User: "Tell me about Apple"
   Missing: time_horizon, risk_tolerance, analysis_depth
                 │
                 ▼
-  Dexter asks:
+  Astra asks:
     📋 What depth for AAPL analysis?
       a) Full fundamental (financials, valuation, analyst views)
       b) Technical/quant (momentum, volatility, signals)
       c) Competitive landscape (peer comparison)
       d) Full comprehensive deep-dive
 
-    ⚖️ What is your risk tolerance? (conservative/moderate/aggressive)
+    ⚖️  What is your risk tolerance? (conservative/moderate/aggressive)
     📅 Investment time horizon? (short/medium/long term)
                 │
                 ▼
@@ -119,31 +128,32 @@ User: "Tell me about Apple"
 ```
 
 The clarification engine:
-- Detects 8 query types: `stock_analysis`, `market_research`, `portfolio_analysis`, `macro_analysis`, `quant_analysis`, `sentiment_analysis`, `comparison`, `general`
-- Skips questions already answered in your learned user profile
-- Updates your profile from every answer (persistent across sessions)
-- Generates at most 3 targeted questions — never interrogates the user
+- 🧠 Detects 8 query types: `stock_analysis`, `market_research`, `portfolio_analysis`, `macro_analysis`, `quant_analysis`, `sentiment_analysis`, `comparison`, `general`
+- ⏭️ Skips questions already answered in your learned user profile
+- 💾 Updates your profile from every answer (persistent across sessions)
+- 🎯 Generates at most 3 targeted questions — never interrogates the user
 
 ---
 
 ## 🚀 Quick Start
 
-### 1. Prerequisites
+### 1. 🔧 Prerequisites
 ```bash
-# Bun runtime
+# Bun runtime (v1.x)
 curl -fsSL https://bun.sh/install | bash
 
 # Qdrant (optional but recommended)
 docker run -p 6333:6333 qdrant/qdrant
 ```
 
-### 2. Install dependencies
+### 2. 📦 Install Dependencies
 ```bash
+git clone https://github.com/inamdarmihir/financial-analysis-tool
 cd financial-analysis-tool
 bun install
 ```
 
-### 3. Configure environment
+### 3. 🔑 Configure Environment
 ```bash
 cp .env.example .env
 # Edit .env with your keys
@@ -162,10 +172,10 @@ QDRANT_PORT=6333
 # QDRANT_API_KEY=your_cloud_api_key
 
 # Optional
-DEBUG=true
+DEBUG=false
 ```
 
-### 4. Run Dexter
+### 4. ▶️ Run Astra
 ```bash
 # Interactive session
 bun start
@@ -176,7 +186,7 @@ bun start "Give me a comprehensive analysis of NVIDIA"
 # Portfolio analysis
 bun start --portfolio '[{"ticker":"AAPL","shares":10,"avgCost":150}]'
 
-# Load from file
+# Load portfolio from file
 bun start --file portfolio.json "Am I well diversified?"
 ```
 
@@ -184,7 +194,7 @@ bun start --file portfolio.json "Am I well diversified?"
 
 ## 💬 Example Queries
 
-Dexter handles **pure natural language** — no syntax required:
+Astra handles **pure natural language** — no syntax required:
 
 ```
 "Give me a deep dive on Tesla — fundamentals, technicals, and sentiment"
@@ -204,19 +214,19 @@ Dexter handles **pure natural language** — no syntax required:
 
 | Command | Description |
 |---------|-------------|
-| `/memory` | View recent Qdrant memory contents |
-| `/profile` | Show your learned user profile (risk, horizon, style) |
-| `/agents` | Display all specialist agents and their capabilities |
-| `/reset` | Clear conversation history (memory persists) |
-| `/help` | Show available commands |
-| `/exit` | Exit Dexter |
+| `/memory` | 🗄️ View recent Qdrant memory contents |
+| `/profile` | 👤 Show your learned user profile (risk, horizon, style) |
+| `/agents` | 🤖 Display all specialist agents and their capabilities |
+| `/reset` | 🔄 Clear conversation history (memory persists) |
+| `/help` | ❓ Show available commands |
+| `/exit` | 🚪 Exit Astra |
 
 ---
 
 ## 📁 Project Structure
 
 ```
-financial-analysis-tool/
+astra/
 ├── index.ts                          # CLI entry point + clarification loop
 │
 ├── agents/
@@ -242,7 +252,7 @@ financial-analysis-tool/
 ├── clarification/
 │   └── intent-classifier.ts          # Query type detection + follow-up Q's
 │
-├── .dexter_memory/                   # Local memory files (auto-created)
+├── .astra_memory/                    # Local memory files (auto-created)
 │   ├── insights_fallback.json        # JSON fallback when Qdrant unavailable
 │   ├── user_profile.json             # Persistent user profile
 │   └── patterns.json                 # Successful research patterns
@@ -264,26 +274,40 @@ financial-analysis-tool/
 
 ---
 
-## 🔑 Design Principles
+## 📦 Tech Stack
 
-- **No hardcoded commands** — pure natural language, intent-classified automatically
-- **Clarification before analysis** — ask precisely what's needed, never more than 3 questions
-- **Multi-agent by default** — stock deep-dives invoke 3+ agents, not just one
-- **Semantic memory** — Qdrant stores embeddings of every analysis for cross-session learning
-- **Self-improving loop** — every completed analysis is distilled and stored back to Qdrant
-- **Graceful degradation** — Qdrant offline? Falls back to keyword JSON. Still fully functional.
-- **Live data only** — all financial data fetched in real-time from Yahoo Finance
+| Layer | Package | Version |
+|-------|---------|---------|
+| ⚡ Runtime | [Bun](https://bun.sh) | `^1.0` |
+| 🔤 Language | TypeScript | `^5.0` |
+| 🤖 Agent Framework | [deepagents](https://npmjs.com/package/deepagents) | `^0.5.0` |
+| 🔗 LLM Orchestration | [LangChain](https://langchain.com) | `^0.3.0` |
+| 🧠 LLM | OpenAI GPT-4o | `gpt-4o` |
+| 🔢 Embeddings | OpenAI | `text-embedding-3-small` |
+| 🗄️ Vector DB | [Qdrant](https://qdrant.tech) (`@qdrant/js-client-rest`) | `^1.17.0` |
+| 📈 Market Data | [yahoo-finance2](https://npmjs.com/package/yahoo-finance2) | `^3.14.0` |
+| 🖥️ CLI | [Commander.js](https://npmjs.com/package/commander) + [Chalk](https://npmjs.com/package/chalk) | `^12.0` / `^5.0` |
 
 ---
 
-## 📦 Tech Stack
+## 🔑 Design Principles
 
-| Layer | Technology |
-|-------|-----------|
-| Runtime | [Bun](https://bun.sh) |
-| Agent Framework | [deepagents](https://npmjs.com/package/deepagents) + [LangChain](https://langchain.com) |
-| LLM | OpenAI GPT-4o |
-| Embeddings | OpenAI `text-embedding-3-small` |
-| Vector DB | [Qdrant](https://qdrant.tech) |
-| Market Data | [yahoo-finance2](https://npmjs.com/package/yahoo-finance2) |
-| CLI | Commander.js + Chalk |
+- 🗣️ **No hardcoded commands** — pure natural language, intent-classified automatically
+- ❓ **Clarification before analysis** — ask precisely what's needed, never more than 3 questions
+- 🤝 **Multi-agent by default** — stock deep-dives invoke 3+ agents, not just one
+- 🧠 **Semantic memory** — Qdrant stores embeddings of every analysis for cross-session learning
+- 🔁 **Self-improving loop** — every completed analysis is distilled and stored back to Qdrant
+- 🛡️ **Graceful degradation** — Qdrant offline? Falls back to keyword JSON. Still fully functional.
+- 📡 **Live data only** — all financial data fetched in real-time from Yahoo Finance
+
+---
+
+## ⚠️ Disclaimer
+
+This project is intended **for educational and informational purposes only**. Nothing produced by this tool constitutes financial advice, investment recommendations, or professional financial guidance. All data is sourced from public APIs and may be inaccurate, delayed, or incomplete. **Do not make investment decisions based on the output of this tool.** The contributors assume no liability for any financial decisions made using this software. Consult a licensed financial professional before investing.
+
+---
+
+<div align="center">
+  <sub>Powered by <a href="https://qdrant.tech">Qdrant</a> · Built with <a href="https://bun.sh">Bun</a> · Inspired by <a href="https://github.com/nousresearch/hermes-agent">hermes-agent</a></sub>
+</div>
